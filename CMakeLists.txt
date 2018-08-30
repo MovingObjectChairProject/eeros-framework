@@ -222,4 +222,4 @@ enable_testing()
 add_subdirectory(src)      # EEROS framework
 add_subdirectory(examples) # Examples
 add_subdirectory(tools)    # Tools
-add_subdirectory(test)     # Unit tests
+#add_subdirectory(test)     # Unit tests
