@@ -15,6 +15,11 @@ set(EEROS_VERSION_PATCH 0)
 set(EEROS_VERSION_TWEAK 0)
 set(EEROS_VERSION ${EEROS_VERSION_MAJOR}.${EEROS_VERSION_MINOR}.${EEROS_VERSION_PATCH}.${EEROS_VERSION_TWEAK})
 
+## Compile Options
+
+option(EEROS_BUILD_EXAMPLES "Build EEROS examples" OFF)
+option(EEROS_BUILD_TOOLS "Build EEROS tools" OFF)
+option(EEROS_BUILD_TESTS "Build EEROS tests" OFF)
 
 ## Additional include and link directories
 include_directories(${ADDITIONAL_INCLUDE_DIRS})
@@ -198,7 +203,7 @@ endif()
 
 ## Config include file
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/includes/config.hpp.in ${CMAKE_CURRENT_BINARY_DIR}/eeros/config.hpp)
-INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/eeros/config.hpp DESTINATION include/eeros)
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/eeros/config.hpp DESTINATION include/eeros COMPONENT include)
 
 ## Special settings for different IDEs
 set(CMAKE_ECLIPSE_GENERATE_SOURCE_PROJECT ON)
@@ -216,10 +221,19 @@ endif(DOXYGEN_FOUND)
 set(EEROS_LIBS ${CMAKE_DL_LIBS} ucl pthread)
 
 ## Enable CTest
-enable_testing()
+if(EEROS_BUILD_TESTS)
+	enable_testing()
+	add_subdirectory(test)     # Unit tests
+endif(EEROS_BUILD_TESTS)
 
 ## Source directories
 add_subdirectory(src)      # EEROS framework
-add_subdirectory(examples) # Examples
-add_subdirectory(tools)    # Tools
-#add_subdirectory(test)     # Unit tests
+
+if(EEROS_BUILD_EXAMPLES)
+	add_subdirectory(examples) # Examples
+endif(EEROS_BUILD_EXAMPLES)
+
+if(EEROS_BUILD_TOOLS)
+	add_subdirectory(tools)    # Tools
+endif(EEROS_BUILD_TOOLS)
+
