@@ -115,7 +115,7 @@ namespace eeros {
 				value = std::numeric_limits<double>::quiet_NaN();
 			}
 			template <typename S> typename std::enable_if<!std::is_arithmetic<S>::value && std::is_integral<typename S::value_type>::value>::type _clear() {
-				value.fill(std::numeric_limits<int32_t>::min());
+				value.fill(std::numeric_limits<typename S:: value_type>::min());
 			}
 			template <typename S> typename std::enable_if<   !std::is_arithmetic<S>::value && std::is_floating_point<typename S::value_type>::value>::type _clear() {
 				value.fill(std::numeric_limits<double>::quiet_NaN());
