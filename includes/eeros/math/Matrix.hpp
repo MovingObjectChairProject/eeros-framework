@@ -36,7 +36,13 @@ namespace eeros {
 			
 			/********** Constructors **********/
 			
-			Matrix() { }
+			Matrix() { 
+			  for(int m = 0; m < M; ++m) {
+			    for(int n = 0; n < N; ++m) {
+				value[m * M + n] = 0;
+			    }
+			  }
+			}
 			
 			Matrix(const T v) {
 				(*this) = v;
