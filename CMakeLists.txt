@@ -31,7 +31,9 @@ include_directories(${ADDITIONAL_INCLUDE_DIRS})
 link_directories(${ADDITIONAL_LINK_DIRS})
 
 ## Install directive for the header files
-INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/includes/eeros DESTINATION include)
+if(NOT PLAY_1_1)
+	INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/includes/eeros DESTINATION include)
+endif()
 
 ## Install CMake configuration file
 set(INCLUDE_INSTALL_DIR "include/")
@@ -52,13 +54,14 @@ write_basic_package_version_file(
 	VERSION ${EEROS_VERSION}
 	COMPATIBILITY SameMajorVersion)
 
-install(
+if(NOT PLAY_1_1)
+	install(
 	FILES
 		${CMAKE_CURRENT_BINARY_DIR}/EEROSConfig.cmake
 		${CMAKE_CURRENT_BINARY_DIR}/EEROSConfigVersion.cmake
 	DESTINATION
 		${LIB_INSTALL_DIR}/EEROS/cmake)
-
+endif()
 
 ## Load CMake modules
 include(CheckCXXCompilerFlag)
@@ -183,8 +186,9 @@ endif()
 
 ## Config include file
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/includes/config.hpp.in ${CMAKE_CURRENT_BINARY_DIR}/eeros/config.hpp)
-INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/eeros/config.hpp DESTINATION include/eeros COMPONENT include)
-
+if(NOT PLAY_1_1)
+	INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/eeros/config.hpp DESTINATION include/eeros COMPONENT include)
+endif()
 ## Special settings for different IDEs
 set(CMAKE_ECLIPSE_GENERATE_SOURCE_PROJECT ON)
 
