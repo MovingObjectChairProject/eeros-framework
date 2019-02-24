@@ -5,6 +5,11 @@
 ## Check cmake version, we need 2.8 or newer
 cmake_minimum_required(VERSION 2.8)
 
+if(PLAY_1_1)
+	unset(ROS_FOUND)
+	remove_definitions(-DROS_FOUND)
+endif()
+
 ## EEROS Robotic Framework
 project(EEROS)
 
